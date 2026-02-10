@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine?</title>
+  <style>
+    :root {
+      --bg1: #ffedf4;
+      --bg2: #ffe7d6;
+      --card: rgba(255, 255, 255, 0.78);
+      --text: #241a22;
+      --yes: #ff3b7a;
+      --no: #2f2a33;
+      --shadow: 0 22px 60px rgba(35, 20, 40, .18);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; color: var(--text); }
+    body {
+      overflow: hidden;
+      background: radial-gradient(1200px 800px at 20% 10%, var(--bg2), transparent 60%),
+                  radial-gradient(1100px 700px at 80% 30%, var(--bg1), transparent 60%),
+                  linear-gradient(135deg, #fff2f7, #fff3ea);
+    }
+
+    .wrap {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: min(720px, 92vw);
+      padding: 30px 22px 26px;
+      border-radius: 22px;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.55);
+      position: relative;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4.3vw, 48px);
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+
+    p {
+      margin: 0 0 14px;
+      text-align: center;
+      opacity: .8;
+      font-size: 15px;
+    }
+
+    /* Cute GIF area */
+    .gif-wrap {
+      display: grid;
+      place-items: center;
+      margin: 14px 0 10px;
+    }
+    .gif {
+      width: min(260px, 70vw);
+      border-radius: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.12);
+      border: 1px solid rgba(255,255,255,.8);
+      background: rgba(255,255,255,.45);
+      overflow: hidden;
+    }
+    .gif img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .gif-note {
+      margin-top: 8px;
+      font-size: 12px;
+      opacity: .55;
+      text-align: center;
+    }
+
+    /* Button stage */
+    .stage {
+      position: relative;
+      height: 170px;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      margin-top: 6px;
+      touch-action: manipulation;
+    }
+
+    .btn {
+      border: 0;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      position: absolute;
+    }
+
+    .btn:active { transform: translateY(1px) scale(.99); }
+    .btn:hover  { transform: translateY(-1px) scale(1.01); }
+
+    #yes {
+      background: linear-gradient(135deg, #ff3b7a, #ff6aa2);
+      color: white;
+      left: 50%;
+      top: 58%;
+      transform: translate(-130%, -50%);
+    }
+
+    #no {
+      background: rgba(0,0,0,.86);
+      color: white;
+      left: 50%;
+      top: 58%;
+      transform: translate(30%, -50%);
+    }
+
+    /* Celebration overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .overlay.on { opacity: 1; }
+
+    .badge {
+      position: absolute;
+      left: 50%;
+      top: 14%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-weight: 900;
+      font-size: clamp(22px, 3.2vw, 36px);
+      color: #ff2f74;
+      text-shadow: 0 10px 30px rgba(255, 47, 116, .18);
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(255,255,255,.8);
+      backdrop-filter: blur(8px);
+    }
+
+    /* Falling items */
+    .fall-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .fall {
+      position: absolute;
+      top: -60px;
+      font-size: 28px;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.12));
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translate(var(--dx), calc(100vh + 120px)) rotate(var(--rot));
+        opacity: 0.95;
+      }
+    }
+
+    /* Fireworks canvas */
+    canvas#fx {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .hint {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 12px;
+      opacity: .55;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Will you be my valentine? 💘</h1>
+      <p>Choose wisely.</p>
+
+      <!-- Cute GIF in the middle -->
+      <div class="gif-wrap">
+        <div class="gif">
+          <!-- Replace src with any GIF you like (local file or URL) -->
+          <img
+            src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+            alt="Cute valentine gif"
+            loading="eager"
+          />
+        </div>
+        <div class="gif-note">✨✨✨</div>
+      </div>
+
+      <div class="stage" id="stage">
+        <button class="btn" id="yes" aria-label="Yes">Yes 💖</button>
+        <button class="btn" id="no" aria-label="No">No 🙃</button>
+      </div>
+
+      <div class="hint">(Hover or tap “No” 😈)</div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="badge">YAYYYYY 💘🌸✨</div>
+  </div>
+
+  <div class="fall-layer" id="fallLayer" aria-hidden="true"></div>
+  <canvas id="fx"></canvas>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const noBtn = document.getElementById('no');
+  const yesBtn = document.getElementById('yes');
+  const overlay = document.getElementById('overlay');
+  const fallLayer = document.getElementById('fallLayer');
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  // --- No button: run away on hover AND on tap (mobile) ---
+  function moveNoButton() {
+    const stageRect = stage.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const pad = 10;
+    const maxX = stageRect.width - btnRect.width - pad;
+    const maxY = stageRect.height - btnRect.height - pad;
+
+    const x = rand(pad, Math.max(pad, maxX));
+    const y = rand(pad, Math.max(pad, maxY));
+
+    // Convert to absolute pixel placement inside stage
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+    noBtn.style.transform = 'translate(0,0)';
+  }
+
+  let noInitialized = false;
+  function initNo() {
+    if (noInitialized) return;
+    noInitialized = true;
+    moveNoButton();
+  }
+
+  window.addEventListener('load', initNo);
+  window.addEventListener('resize', () => {
+    initNo();
+    moveNoButton();
+  });
+
+  // Desktop hover
+  noBtn.addEventListener('mouseenter', () => { initNo(); moveNoButton(); });
+
+  // Mobile + general pointer interactions
+  // pointerenter can fire on some devices; pointerdown covers tap.
+  const dodge = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    initNo();
+    moveNoButton();
+  };
+
+  noBtn.addEventListener('pointerdown', dodge, { passive: false });
+  noBtn.addEventListener('touchstart', dodge, { passive: false });
+
+  // If user still "clicks" it, dodge again
+  noBtn.addEventListener('click', dodge);
+
+  // --- Yes button: start celebration ---
+  let celebrating = false;
+
+  yesBtn.addEventListener('click', () => {
+    if (celebrating) return;
+    celebrating = true;
+
+    overlay.classList.add('on');
+
+    startFalling();
+    startFireworks();
+
+    yesBtn.disabled = true;
+    noBtn.style.display = 'none';
+    yesBtn.textContent = 'YES!!! 💘';
+  });
+
+  // --- Falling hearts & flowers ---
+  const EMOJIS = ["💖","💘","💝","💕","🌸","🌷","🌹","🪻","✨","💗"];
+  let fallInterval = null;
+
+  function spawnFall() {
+    const el = document.createElement('div');
+    el.className = 'fall';
+    el.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+
+    const x = rand(0, window.innerWidth - 40);
+    const dx = rand(-120, 120) + 'px';
+    const rot = rand(-720, 720) + 'deg';
+    const dur = rand(3.6, 6.8);
+    const size = rand(18, 38);
+
+    el.style.left = x + 'px';
+    el.style.setProperty('--dx', dx);
+    el.style.setProperty('--rot', rot);
+    el.style.fontSize = size + 'px';
+    el.style.animationDuration = dur + 's';
+    el.style.opacity = rand(0.75, 1);
+
+    fallLayer.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+
+  function startFalling() {
+    for (let i = 0; i < 18; i++) setTimeout(spawnFall, i * 80);
+    fallInterval = setInterval(spawnFall, 140);
+
+    setTimeout(() => {
+      clearInterval(fallInterval);
+      fallInterval = null;
+    }, 12000);
+  }
+
+  // --- Fireworks (simple particle system) ---
+  const canvas = document.getElementById('fx');
+  const ctx = canvas.getContext('2d', { alpha: true });
+
+  function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.floor(window.innerWidth * dpr);
+    canvas.height = Math.floor(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  const particles = [];
+  const rockets = [];
+
+  function hsla(h, s, l, a) { return `hsla(${h}, ${s}%, ${l}%, ${a})`; }
+
+  function makeRocket() {
+    const x = rand(window.innerWidth * 0.2, window.innerWidth * 0.8);
+    const y = window.innerHeight + 10;
+    const vx = rand(-1.2, 1.2);
+    const vy = rand(-10.5, -13.5);
+    const hue = rand(320, 380); // pinky range
+    rockets.push({ x, y, vx, vy, hue, life: rand(35, 55) });
+  }
+
+  function explode(r) {
+    const count = Math.floor(rand(40, 70));
+    for (let i = 0; i < count; i++) {
+      const ang = rand(0, Math.PI * 2);
+      const spd = rand(2.0, 6.2);
+      particles.push({
+        x: r.x,
+        y: r.y,
+        vx: Math.cos(ang) * spd + rand(-0.3, 0.3),
+        vy: Math.sin(ang) * spd + rand(-0.3, 0.3),
+        hue: r.hue + rand(-18, 18),
+        alpha: 1,
+        decay: rand(0.010, 0.020),
+        size: rand(1.2, 2.6)
+      });
+    }
+    // sparkly hearts
+    for (let i = 0; i < 8; i++) {
+      particles.push({
+        x: r.x,
+        y: r.y,
+        vx: rand(-4, 4),
+        vy: rand(-4, 4),
+        hue: 345,
+        alpha: 1,
+        decay: rand(0.012, 0.020),
+        size: rand(2.0, 3.2),
+        heart: true
+      });
+    }
+  }
+
+  let fxRunning = false;
+  let rocketTimer = null;
+
+  function startFireworks() {
+    if (fxRunning) return;
+    fxRunning = true;
+
+    rocketTimer = setInterval(() => {
+      makeRocket();
+      if (Math.random() < 0.55) setTimeout(makeRocket, 180);
+    }, 520);
+
+    setTimeout(() => {
+      clearInterval(rocketTimer);
+      rocketTimer = null;
+    }, 10000);
+
+    requestAnimationFrame(tick);
+  }
+
+  function drawHeart(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.translate(x, y);
+    ctx.scale(size, size);
+    ctx.beginPath();
+    ctx.moveTo(0, -0.3);
+    ctx.bezierCurveTo(-0.5, -0.9, -1.2, -0.1, 0, 0.8);
+    ctx.bezierCurveTo(1.2, -0.1, 0.5, -0.9, 0, -0.3);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = rockets.length - 1; i >= 0; i--) {
+      const r = rockets[i];
+      r.x += r.vx;
+      r.y += r.vy;
+      r.vy += 0.12;
+      r.life--;
+
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = hsla(r.hue % 360, 90, 60, 0.9);
+      ctx.fill();
+
+      if (r.life <= 0 || r.vy >= -2.2) {
+        explode(r);
+        rockets.splice(i, 1);
+      }
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.06;
+      p.vx *= 0.988;
+      p.vy *= 0.988;
+      p.alpha -= p.decay;
+
+      if (p.alpha <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      if (p.heart) {
+        drawHeart(p.x, p.y, p.size, hsla(345, 90, 60, 1), p.alpha);
+      } else {
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = hsla(p.hue % 360, 95, 60, 1);
+        ctx.fill();
+      }
+    }
+
+    if (fxRunning) {
+      if (rockets.length === 0 && particles.length === 0 && !rocketTimer) {
+        fxRunning = false;
+        return;
+      }
+      requestAnimationFrame(tick);
+    }
+  }
+})();
+</script>
+</body>
+</html>
