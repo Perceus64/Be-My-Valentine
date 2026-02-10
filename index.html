@@ -13,7 +13,6 @@
       --pink2:#ff6aa2;
       --dark: rgba(0,0,0,.86);
     }
-
     *{ box-sizing:border-box; }
     html,body{ height:100%; margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; color:var(--text); }
     body{
@@ -27,11 +26,10 @@
       50%{ background-position: 100% 50%; }
       100%{ background-position: 0% 50%; }
     }
-
     .wrap{ height:100%; display:grid; place-items:center; padding:20px; }
     .card{
       width:min(760px, 94vw);
-      padding:28px 22px 22px;
+      padding:24px 22px 22px;
       border-radius:22px;
       background: var(--card);
       backdrop-filter: blur(10px);
@@ -40,22 +38,36 @@
       position:relative;
       overflow:hidden;
     }
-
     h1{
-      margin:0 0 10px;
-      font-size: clamp(26px, 4.4vw, 46px);
+      margin:0 0 8px;
+      font-size: clamp(24px, 4.4vw, 46px);
       letter-spacing: -0.02em;
       text-align:center;
       min-height: 1.2em;
     }
-    p{
-      margin:0 0 10px;
-      text-align:center;
-      opacity:.8;
-      font-size:15px;
+    p{ margin:0 0 10px; text-align:center; opacity:.8; font-size:15px; }
+
+    /* Name input row */
+    .name-row{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:wrap;
+      margin: 6px 0 10px;
+    }
+    .name-row input{
+      width: min(260px, 70vw);
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.75);
+      outline: none;
+      font-weight: 800;
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
     }
 
-    .gif-wrap{ display:grid; place-items:center; margin: 10px 0 8px; }
+    .gif-wrap{ display:grid; place-items:center; margin: 6px 0 8px; }
     .gif{
       width:min(260px, 70vw);
       border-radius:18px;
@@ -71,7 +83,7 @@
       gap:10px;
       justify-content:center;
       flex-wrap:wrap;
-      margin: 10px 0 8px;
+      margin: 8px 0 8px;
     }
     .pill{
       border:1px solid rgba(0,0,0,.08);
@@ -126,7 +138,6 @@
       0%,100%{ box-shadow: 0 10px 22px rgba(0,0,0,.12), 0 0 0 rgba(255,59,122,0); filter: saturate(1); }
       50%{ box-shadow: 0 10px 22px rgba(0,0,0,.12), 0 0 28px rgba(255,59,122,.35); filter: saturate(1.08); }
     }
-
     #no{
       background: var(--dark);
       color:white;
@@ -135,42 +146,50 @@
       transform: translate(30%,-50%);
     }
 
-    .hint{
-      margin-top: 8px;
-      text-align:center;
+    .counter{ text-align:center; margin-top: 6px; font-size: 13px; font-weight: 800; opacity:.8; }
+
+    .meter{
+      margin: 12px auto 0;
+      width: min(520px, 92%);
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 999px;
+      padding: 6px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+    }
+    .meter-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:6px;
       font-size:12px;
-      opacity:.55;
+      font-weight:900;
+      opacity:.85;
+      padding: 0 6px;
+    }
+    .bar{ height: 14px; background: rgba(0,0,0,.08); border-radius: 999px; overflow:hidden; }
+    .fill{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff3b7a, #ff6aa2);
+      border-radius: 999px;
+      transition: width .25s ease;
     }
 
-    .counter{
-      text-align:center;
-      margin-top: 6px;
-      font-size: 13px;
-      font-weight: 800;
-      opacity:.8;
-    }
+    .hint{ margin-top: 8px; text-align:center; font-size:12px; opacity:.55; }
 
-    .overlay{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:0;
-      transition: opacity .35s ease;
-    }
+    .overlay{ position:fixed; inset:0; pointer-events:none; opacity:0; transition: opacity .35s ease; }
     .overlay.on{ opacity:1; }
 
     .badge{
-      position:absolute;
-      left:50%;
-      top:12%;
+      position:absolute; left:50%; top:10%;
       transform: translateX(-50%);
-      text-align:center;
-      font-weight:1000;
+      text-align:center; font-weight:1000;
       font-size: clamp(20px, 3vw, 34px);
       color: #ff2f74;
       text-shadow: 0 10px 30px rgba(255, 47, 116, .18);
-      padding: 10px 18px;
-      border-radius: 999px;
+      padding: 10px 18px; border-radius: 999px;
       background: rgba(255,255,255,.70);
       border:1px solid rgba(255,255,255,.85);
       backdrop-filter: blur(10px);
@@ -178,78 +197,73 @@
     }
 
     .submsg{
-      position:absolute;
-      left:50%;
-      top:22%;
+      position:absolute; left:50%; top:20%;
       transform: translateX(-50%);
-      text-align:center;
-      font-weight:900;
+      text-align:center; font-weight:900;
       font-size: clamp(14px, 2.3vw, 18px);
       opacity:0;
       transition: opacity .4s ease, transform .4s ease;
       background: rgba(255,255,255,.62);
       border:1px solid rgba(255,255,255,.85);
       backdrop-filter: blur(10px);
-      padding: 10px 14px;
-      border-radius: 16px;
+      padding: 10px 14px; border-radius: 16px;
       max-width: 92vw;
       pointer-events:none;
     }
     .submsg.on{ opacity:1; transform: translateX(-50%) translateY(6px); }
 
-    /* Date idea box */
-    #dateBox{
-      top: 32%;
-      opacity: 0;
-      pointer-events: none;
+    #dateBox{ top: 29%; opacity:0; pointer-events:none; }
+    #dateBox.on{ opacity:1; pointer-events:auto; }
+
+    .letter{
+      position:absolute; left:50%; top:44%;
+      transform: translateX(-50%);
+      width: min(660px, 92vw);
+      background: rgba(255,255,255,.82);
+      border:1px solid rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.14);
+      padding: 14px 14px 16px;
+      opacity:0; pointer-events:none;
+      transition: opacity .45s ease, transform .45s ease;
     }
-    #dateBox.on{
-      opacity: 1;
-      pointer-events: auto;
+    .letter.on{
+      opacity:1; pointer-events:auto;
+      transform: translateX(-50%) translateY(8px);
     }
+    .letter h3{ margin:0 0 8px; font-size: 16px; font-weight: 1000; text-align:center; color:#ff2f74; }
+    .letter-body{
+      font-size: 14px; line-height: 1.55;
+      font-weight: 800; opacity: .9;
+      white-space: pre-wrap;
+    }
+    .letter-actions{ display:flex; justify-content:center; gap:10px; margin-top: 10px; flex-wrap:wrap; }
 
     .fall-layer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
     .fall{
-      position:absolute;
-      top:-60px;
-      font-size: 28px;
+      position:absolute; top:-60px; font-size: 28px;
       will-change: transform, opacity;
       filter: drop-shadow(0 6px 12px rgba(0,0,0,.12));
       animation: fall linear forwards;
     }
-    @keyframes fall{
-      to{ transform: translate(var(--dx), calc(100vh + 120px)) rotate(var(--rot)); opacity:.95; }
-    }
+    @keyframes fall{ to{ transform: translate(var(--dx), calc(100vh + 120px)) rotate(var(--rot)); opacity:.95; } }
 
-    canvas#fx{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      pointer-events:none;
-    }
+    canvas#fx{ position:fixed; inset:0; width:100%; height:100%; pointer-events:none; }
 
     .cursor-heart{
-      position: fixed;
-      left: 0; top: 0;
+      position: fixed; left: 0; top: 0;
       transform: translate(-50%,-50%);
-      pointer-events:none;
-      font-size: 22px;
-      opacity: 0;
-      transition: opacity .2s ease;
+      pointer-events:none; font-size: 22px;
+      opacity: 0; transition: opacity .2s ease;
       filter: drop-shadow(0 10px 20px rgba(0,0,0,.15));
       z-index: 9999;
     }
     .cursor-heart.on{ opacity: 0.95; }
 
     .modal{
-      position: fixed;
-      inset:0;
-      display:none;
-      place-items:center;
-      background: rgba(0,0,0,.25);
-      backdrop-filter: blur(6px);
-      z-index: 9998;
+      position: fixed; inset:0; display:none; place-items:center;
+      background: rgba(0,0,0,.25); backdrop-filter: blur(6px); z-index: 9998;
     }
     .modal.on{ display:grid; }
     .modal-card{
@@ -265,27 +279,19 @@
     .modal-card p{ margin: 0 0 14px; opacity:.75; font-size: 13px; }
     .modes{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .mode{
-      padding: 12px 10px;
-      border-radius: 18px;
+      padding: 12px 10px; border-radius: 18px;
       border: 1px solid rgba(0,0,0,.08);
       background: rgba(255,255,255,.75);
-      cursor:pointer;
-      font-weight: 900;
+      cursor:pointer; font-weight: 900;
       box-shadow: 0 10px 22px rgba(0,0,0,.08);
     }
     .mode small{ display:block; margin-top:6px; font-weight:800; opacity:.65; }
     @media (max-width: 420px){ .modes{ grid-template-columns: 1fr; } }
 
-    /* Hidden YouTube player holder (kept tiny but present) */
     #yt-holder{
-      position: fixed;
-      width: 1px;
-      height: 1px;
-      left: -10px;
-      top: -10px;
-      overflow: hidden;
-      opacity: 0.001;
-      pointer-events: none;
+      position: fixed; width: 1px; height: 1px;
+      left: -10px; top: -10px;
+      overflow: hidden; opacity: 0.001; pointer-events: none;
     }
   </style>
 </head>
@@ -295,9 +301,14 @@
       <h1 id="title"></h1>
       <p id="subtitle">Choose wisely.</p>
 
+      <!-- ✅ Name input -->
+      <div class="name-row">
+        <input id="nameInput" type="text" inputmode="text" maxlength="40" placeholder="Enter their name (optional) 💌" />
+        <button class="pill" id="setNameBtn">✨ Set</button>
+      </div>
+
       <div class="gif-wrap">
         <div class="gif">
-          <!-- TIP: For best Screenshot reliability, download a GIF and use: src="cute.gif" -->
           <img id="gif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Cute valentine gif" loading="eager">
         </div>
       </div>
@@ -306,7 +317,14 @@
         <div class="pill" id="musicBtn">🔇 Music</div>
         <div class="pill" id="modeBtn">🧠 Mode: Cute</div>
         <div class="pill" id="shareBtn">💌 Share</div>
-        <div class="pill" id="shotBtn">📸 Screenshot</div>
+      </div>
+
+      <div class="meter" aria-label="Love meter">
+        <div class="meter-row">
+          <div id="meterLabel">Love Meter 💘</div>
+          <div id="meterPct">0%</div>
+        </div>
+        <div class="bar"><div class="fill" id="meterFill"></div></div>
       </div>
 
       <div class="stage" id="stage">
@@ -331,6 +349,15 @@
         <button id="newIdeaBtn" class="pill" style="pointer-events:auto;">🔄 New idea</button>
       </div>
     </div>
+
+    <div class="letter" id="letter">
+      <h3 id="letterTitle">A little note 💌</h3>
+      <div class="letter-body" id="letterBody"></div>
+      <div class="letter-actions">
+        <button class="pill" id="copyLetterBtn" style="pointer-events:auto;">📋 Copy</button>
+        <button class="pill" id="rerollLetterBtn" style="pointer-events:auto;">✨ New version</button>
+      </div>
+    </div>
   </div>
 
   <div class="fall-layer" id="fallLayer" aria-hidden="true"></div>
@@ -350,7 +377,6 @@
     </div>
   </div>
 
-  <!-- YouTube tiny player -->
   <div id="yt-holder"><div id="yt-player"></div></div>
   <script src="https://www.youtube.com/iframe_api"></script>
 
@@ -370,18 +396,59 @@
   const musicBtn = document.getElementById('musicBtn');
   const modeBtn = document.getElementById('modeBtn');
   const shareBtn = document.getElementById('shareBtn');
-  const shotBtn = document.getElementById('shotBtn');
   const modal = document.getElementById('modal');
-  const card = document.getElementById('card');
 
   const dateBox = document.getElementById('dateBox');
   const dateIdeaEl = document.getElementById('dateIdea');
   const newIdeaBtn = document.getElementById('newIdeaBtn');
 
-  const TITLE_TEXT = "Will you be my valentine? 💘";
+  const meterFill = document.getElementById('meterFill');
+  const meterPct = document.getElementById('meterPct');
+  const meterLabel = document.getElementById('meterLabel');
+
+  const letter = document.getElementById('letter');
+  const letterTitle = document.getElementById('letterTitle');
+  const letterBody = document.getElementById('letterBody');
+  const copyLetterBtn = document.getElementById('copyLetterBtn');
+  const rerollLetterBtn = document.getElementById('rerollLetterBtn');
+
+  // ✅ Name input elements
+  const nameInput = document.getElementById('nameInput');
+  const setNameBtn = document.getElementById('setNameBtn');
+
   function rand(min,max){ return Math.random()*(max-min)+min; }
 
-  // ========= 4) Typewriter title =========
+  // --- Name handling (query + localStorage + input) ---
+  const params = new URLSearchParams(location.search);
+  const fromQuery = (params.get('name') || "").trim();
+  const fromStorage = (localStorage.getItem("valentine_name") || "").trim();
+
+  function sanitizeName(n){
+    return (n || "").trim().replace(/[<>]/g, "").slice(0, 40);
+  }
+
+  let currentName = sanitizeName(fromQuery || fromStorage);
+
+  function setName(n){
+    currentName = sanitizeName(n);
+    localStorage.setItem("valentine_name", currentName);
+    updateTitle();
+  }
+
+  function updateTitle(){
+    const who = currentName ? `, ${currentName}` : "";
+    const text = `Will you be my valentine${who}? 💘`;
+    typewriter(titleEl, text, 30);
+    nameInput.value = currentName || "";
+  }
+
+  // Pre-fill input on load
+  nameInput.value = currentName || "";
+
+  setNameBtn.addEventListener('click', () => setName(nameInput.value));
+  nameInput.addEventListener('keydown', (e) => { if(e.key === "Enter") setName(nameInput.value); });
+
+  // Typewriter
   function typewriter(el, text, speed=34){
     el.textContent = "";
     let i = 0;
@@ -390,9 +457,10 @@
       if(i >= text.length) clearInterval(t);
     }, speed);
   }
-  typewriter(titleEl, TITLE_TEXT, 34);
 
-  // ========= Date idea generator =========
+  updateTitle();
+
+  // Date ideas
   const DATE_IDEAS = [
     "🍕 Pizza + a cozy movie night (you pick the movie, I pick the snacks)",
     "🌙 Night drive + playlist battle + hot chocolate stop",
@@ -418,37 +486,19 @@
   function pickDateIdea(){
     dateIdeaEl.textContent = DATE_IDEAS[Math.floor(Math.random()*DATE_IDEAS.length)];
   }
-  newIdeaBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    pickDateIdea();
-  });
+  newIdeaBtn.addEventListener('click', (e) => { e.preventDefault(); pickDateIdea(); });
 
-  // ========= 14) Personality modes =========
+  // Modes
   const MODES = {
-    cute: {
-      label: "Cute",
-      badge: "YAYYYYY 💘🌸✨",
-      sub: "PS: You just made my whole year 💖",
-      cursor: "💗",
-      emojis: ["💖","💘","💝","💕","🌸","🌷","🌹","🪻","✨","💗"],
-      fireworks: { rocketEvery: 520, extraChance: 0.55, particleMult: 1.0 },
-    },
-    chaotic: {
-      label: "Chaotic",
-      badge: "CHAOS ACCEPTED 😈💥💘",
-      sub: "You chose… wisely. Now suffer the confetti 😈✨",
-      cursor: "💥",
-      emojis: ["💥","💘","💗","✨","🌹","😈","💖","🔥","🌸","🫶"],
-      fireworks: { rocketEvery: 360, extraChance: 0.85, particleMult: 1.45 },
-    },
-    nerdy: {
-      label: "Nerdy",
-      badge: "LOVE CONFIRMED ✅💘🤓",
-      sub: "Achievement unlocked: Valentine secured 🏆",
-      cursor: "🧠",
-      emojis: ["💘","🤓","🧠","✨","🌸","💖","🫶","📡","🧪","⭐"],
-      fireworks: { rocketEvery: 520, extraChance: 0.6, particleMult: 1.05 },
-    }
+    cute: { label:"Cute", badge:"YAYYYYY 💘🌸✨", sub:"PS: You just made my whole year 💖", cursor:"💗",
+      emojis:["💖","💘","💝","💕","🌸","🌷","🌹","🪻","✨","💗"],
+      fireworks:{ rocketEvery:520, extraChance:0.55, particleMult:1.0 } },
+    chaotic: { label:"Chaotic", badge:"CHAOS ACCEPTED 😈💥💘", sub:"You chose… wisely. Now suffer the confetti 😈✨", cursor:"💥",
+      emojis:["💥","💘","💗","✨","🌹","😈","💖","🔥","🌸","🫶"],
+      fireworks:{ rocketEvery:360, extraChance:0.85, particleMult:1.45 } },
+    nerdy: { label:"Nerdy", badge:"LOVE CONFIRMED ✅💘🤓", sub:"Achievement unlocked: Valentine secured 🏆", cursor:"🧠",
+      emojis:["💘","🤓","🧠","✨","🌸","💖","🫶","📡","🧪","⭐"],
+      fireworks:{ rocketEvery:520, extraChance:0.6, particleMult:1.05 } },
   };
   let mode = "cute";
   function applyMode(m){
@@ -463,19 +513,26 @@
   modeBtn.addEventListener('click', () => modal.classList.add('on'));
   modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('on'); });
   modal.querySelectorAll('.mode').forEach(el => {
-    el.addEventListener('click', () => {
-      applyMode(el.dataset.mode);
-      modal.classList.remove('on');
-    });
+    el.addEventListener('click', () => { applyMode(el.dataset.mode); modal.classList.remove('on'); });
   });
 
-  // ========= 2) No button changes text + runs away =========
+  // Love meter
+  let love = 0;
+  function setLove(val){
+    love = Math.max(0, Math.min(100, val));
+    meterFill.style.width = love + "%";
+    meterPct.textContent = love + "%";
+    if(love >= 100){
+      meterLabel.textContent = "Love Meter 💘 (MAX)";
+      setTimeout(() => { if(!celebrating) yesBtn.click(); }, 250);
+    }
+  }
+  setLove(0);
+
+  // No button dodge
   const noTexts = ["No 🙃","Are you sure?","Really?","Please? 🥺","Don't do this 💔","Last chance 😭","Ok fine… No?"];
   let noTextIndex = 0;
-  function changeNoText(){
-    noTextIndex = (noTextIndex + 1) % noTexts.length;
-    noBtn.textContent = noTexts[noTextIndex];
-  }
+  function changeNoText(){ noTextIndex = (noTextIndex + 1) % noTexts.length; noBtn.textContent = noTexts[noTextIndex]; }
   function moveNoButton() {
     const stageRect = stage.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
@@ -489,98 +546,44 @@
     noBtn.style.transform = 'translate(0,0)';
   }
   let noInitialized = false;
-  function initNo(){
-    if(noInitialized) return;
-    noInitialized = true;
-    moveNoButton();
-  }
+  function initNo(){ if(noInitialized) return; noInitialized = true; moveNoButton(); }
   window.addEventListener('load', initNo);
   window.addEventListener('resize', () => { initNo(); moveNoButton(); });
 
+  function bumpLove(){
+    const inc = (love < 40) ? 9 : (love < 75) ? 12 : 18;
+    setLove(love + inc);
+  }
   const dodge = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    initNo();
-    changeNoText();
-    moveNoButton();
+    e.preventDefault(); e.stopPropagation();
+    initNo(); changeNoText(); moveNoButton(); bumpLove();
   };
-  noBtn.addEventListener('mouseenter', () => { initNo(); changeNoText(); moveNoButton(); });
+  noBtn.addEventListener('mouseenter', () => { initNo(); changeNoText(); moveNoButton(); bumpLove(); });
   noBtn.addEventListener('pointerdown', dodge, { passive:false });
   noBtn.addEventListener('touchstart', dodge, { passive:false });
   noBtn.addEventListener('click', dodge);
 
-  // ========= 6) Kiss counter =========
+  // Kiss counter
   let kisses = 0;
-  function incKiss(){
-    kisses++;
-    counterEl.textContent = `Kisses sent: ${kisses} 💋`;
-  }
+  function incKiss(){ kisses++; counterEl.textContent = `Kisses sent: ${kisses} 💋`; }
 
-  // ========= 7) Cursor-follow heart =========
+  // Cursor heart follow
   let targetX = window.innerWidth/2, targetY = window.innerHeight/2;
   let curX = targetX, curY = targetY;
-  function onPointerMove(e){
-    targetX = e.clientX;
-    targetY = e.clientY;
-    cursorHeart.classList.add('on');
-  }
-  window.addEventListener('pointermove', onPointerMove);
+  window.addEventListener('pointermove', (e) => { targetX = e.clientX; targetY = e.clientY; cursorHeart.classList.add('on'); });
   window.addEventListener('touchmove', (e) => {
     if(!e.touches || !e.touches[0]) return;
-    targetX = e.touches[0].clientX;
-    targetY = e.touches[0].clientY;
-    cursorHeart.classList.add('on');
+    targetX = e.touches[0].clientX; targetY = e.touches[0].clientY; cursorHeart.classList.add('on');
   }, { passive:true });
-  function followLoop(){
+  (function followLoop(){
     curX += (targetX - curX) * 0.18;
     curY += (targetY - curY) * 0.18;
     cursorHeart.style.left = curX + "px";
     cursorHeart.style.top  = curY + "px";
     requestAnimationFrame(followLoop);
-  }
-  followLoop();
+  })();
 
-  // ========= 9) Emoji burst on Yes hover =========
-  function burstAt(x, y, count=14){
-    const emojis = MODES[mode].emojis;
-    for(let i=0;i<count;i++){
-      const el = document.createElement('div');
-      el.className = 'fall';
-      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-      el.style.position = "fixed";
-      el.style.left = (x + rand(-8, 8)) + "px";
-      el.style.top  = (y + rand(-8, 8)) + "px";
-      el.style.fontSize = rand(16, 28) + "px";
-      el.style.animation = "none";
-      el.style.opacity = 1;
-      el.style.pointerEvents = "none";
-      el.style.transform = "translate(-50%,-50%)";
-      document.body.appendChild(el);
-
-      const vx = rand(-5, 5);
-      const vy = rand(-8, -2);
-      const rot = rand(-360, 360);
-      const gravity = rand(0.18, 0.28);
-
-      let t = 0;
-      function step(){
-        t++;
-        const dx = vx * t;
-        const dy = (vy * t) + (gravity * t * t);
-        el.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${rot + t*6}deg)`;
-        el.style.opacity = Math.max(0, 1 - t/55);
-        if(t < 55) requestAnimationFrame(step);
-        else el.remove();
-      }
-      requestAnimationFrame(step);
-    }
-  }
-  yesBtn.addEventListener('mouseenter', () => {
-    const r = yesBtn.getBoundingClientRect();
-    burstAt(r.left + r.width/2, r.top + r.height/2, 16);
-  });
-
-  // ========= Falling emojis =========
+  // Falling emojis
   let fallInterval = null;
   function spawnFall(){
     const emojis = MODES[mode].emojis;
@@ -602,10 +605,9 @@
     setTimeout(() => { clearInterval(fallInterval); fallInterval=null; }, ms);
   }
 
-  // ========= Fireworks + confetti on one canvas =========
+  // Fireworks + confetti
   const canvas = document.getElementById('fx');
   const ctx = canvas.getContext('2d', { alpha:true });
-
   function resizeCanvas(){
     const dpr = window.devicePixelRatio || 1;
     canvas.width = Math.floor(window.innerWidth * dpr);
@@ -615,28 +617,23 @@
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
 
-  const particles = [];
-  const rockets = [];
-  const confetti = [];
-
-  let fxRunning = false;
-  let rocketTimer = null;
-
+  const particles = [], rockets = [], confetti = [];
+  let fxRunning = false, rocketTimer = null;
   function hsla(h,s,l,a){ return `hsla(${h}, ${s}%, ${l}%, ${a})`; }
 
   function makeRocket(){
-    const x = rand(window.innerWidth*0.2, window.innerWidth*0.8);
-    const y = window.innerHeight + 10;
-    const vx = rand(-1.2, 1.2);
-    const vy = rand(-10.5, -13.5);
-    const hue = (mode === "chaotic") ? rand(0, 360) : rand(320, 380);
-    rockets.push({ x,y,vx,vy,hue, life: rand(35, 55) });
+    rockets.push({
+      x: rand(window.innerWidth*0.2, window.innerWidth*0.8),
+      y: window.innerHeight + 10,
+      vx: rand(-1.2, 1.2),
+      vy: rand(-10.5, -13.5),
+      hue: (mode === "chaotic") ? rand(0, 360) : rand(320, 380),
+      life: rand(35, 55)
+    });
   }
-
   function explode(r){
     const mult = MODES[mode].fireworks.particleMult;
     const count = Math.floor(rand(40, 70) * mult);
-
     for(let i=0;i<count;i++){
       const ang = rand(0, Math.PI*2);
       const spd = rand(2.0, 6.2) * (mode==="chaotic" ? 1.15 : 1.0);
@@ -664,7 +661,6 @@
       });
     }
   }
-
   function drawHeart(x,y,size,color,alpha){
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -679,26 +675,14 @@
     ctx.fill();
     ctx.restore();
   }
-
   function confettiBurst(x,y, amount=120){
     for(let i=0;i<amount;i++){
-      confetti.push({
-        x, y,
-        vx: rand(-7,7),
-        vy: rand(-10,-2),
-        g: rand(0.18, 0.28),
-        a: 1,
-        d: rand(0.010, 0.018),
-        s: rand(2,4),
-        h: rand(0,360)
-      });
+      confetti.push({ x, y, vx: rand(-7,7), vy: rand(-10,-2), g: rand(0.18, 0.28), a: 1, d: rand(0.010, 0.018), s: rand(2,4), h: rand(0,360) });
     }
   }
-
   function startFireworks(duration=10000){
     if(fxRunning) return;
     fxRunning = true;
-
     const every = MODES[mode].fireworks.rocketEvery;
     const extraChance = MODES[mode].fireworks.extraChance;
 
@@ -710,65 +694,42 @@
     setTimeout(() => { clearInterval(rocketTimer); rocketTimer=null; }, duration);
     requestAnimationFrame(tick);
   }
-
   function drawConfetti(){
     for(let i=confetti.length-1;i>=0;i--){
       const c = confetti[i];
-      c.x += c.vx;
-      c.y += c.vy;
-      c.vy += c.g;
-      c.vx *= 0.992;
-      c.vy *= 0.992;
+      c.x += c.vx; c.y += c.vy; c.vy += c.g;
+      c.vx *= 0.992; c.vy *= 0.992;
       c.a -= c.d;
-      if(c.a <= 0 || c.y > window.innerHeight + 40){
-        confetti.splice(i,1);
-        continue;
-      }
+      if(c.a <= 0 || c.y > window.innerHeight + 40){ confetti.splice(i,1); continue; }
       ctx.globalAlpha = Math.max(0, c.a);
       ctx.fillStyle = hsla(c.h, 95, 60, 1);
       ctx.fillRect(c.x, c.y, c.s, c.s);
     }
   }
-
   function tick(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
     for(let i=rockets.length-1;i>=0;i--){
       const r = rockets[i];
-      r.x += r.vx;
-      r.y += r.vy;
-      r.vy += 0.12;
-      r.life--;
-
+      r.x += r.vx; r.y += r.vy; r.vy += 0.12; r.life--;
       ctx.globalAlpha = 0.9;
-      ctx.beginPath();
-      ctx.arc(r.x, r.y, 2.2, 0, Math.PI*2);
+      ctx.beginPath(); ctx.arc(r.x, r.y, 2.2, 0, Math.PI*2);
       ctx.fillStyle = hsla(r.hue % 360, 90, 60, 0.9);
       ctx.fill();
-
-      if(r.life <= 0 || r.vy >= -2.2){
-        explode(r);
-        rockets.splice(i,1);
-      }
+      if(r.life <= 0 || r.vy >= -2.2){ explode(r); rockets.splice(i,1); }
     }
 
     for(let i=particles.length-1;i>=0;i--){
       const p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += 0.06;
-      p.vx *= 0.988;
-      p.vy *= 0.988;
+      p.x += p.vx; p.y += p.vy; p.vy += 0.06;
+      p.vx *= 0.988; p.vy *= 0.988;
       p.alpha -= p.decay;
-
       if(p.alpha <= 0){ particles.splice(i,1); continue; }
-
       if(p.heart){
         drawHeart(p.x, p.y, p.size, hsla(345, 90, 60, 1), p.alpha);
       }else{
         ctx.globalAlpha = p.alpha;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
         ctx.fillStyle = hsla(p.hue % 360, 95, 60, 1);
         ctx.fill();
       }
@@ -785,7 +746,7 @@
     }
   }
 
-  // ========= 8) Confetti cannon on click anywhere (after Yes) =========
+  // Confetti on click after yes
   let allowClicksForConfetti = false;
   window.addEventListener('pointerdown', (e) => {
     if(!allowClicksForConfetti) return;
@@ -793,18 +754,71 @@
     if(!fxRunning) startFireworks(2500);
   }, { passive:true });
 
-  // ========= 3) Fake loading when pressing Yes =========
-  let celebrating = false;
-  function showDateBox(){
-    pickDateIdea();
-    dateBox.classList.add('on');
+  // Love letter
+  function buildLetter(name){
+    const n = name || "you";
+    const openers = [`Hey ${n}…`, `${n}, quick confession…`, `Okay ${n}—here’s the truth:`, `Dear ${n},`];
+    const lines = [
+      "I’ve been looking for the right moment to say this in a simple, honest way.",
+      "You have this rare kind of presence—like things feel lighter when you’re around.",
+      "I love the way you make ordinary moments feel like they matter.",
+      "Even when we’re doing nothing special, it somehow feels… special.",
+      "I admire your heart, your mind, and the little details you don’t even notice you do.",
+      "You deserve a love that feels safe, playful, and steady at the same time.",
+      "So yes, this is me choosing you—softly, proudly, and without hesitation."
+    ];
+    const closers = [
+      "If you’ll let me, I’d love to be your valentine—and keep showing you, in small ways, how much you mean to me. 💖",
+      "So… will you let me be your valentine? I promise: more laughs, more warmth, and a thousand tiny reasons to smile. 💘",
+      "If you say yes, I’m not just celebrating today—I’m celebrating the chance to make you feel loved, again and again. 💞"
+    ];
+    const pick = (arr) => arr[Math.floor(Math.random()*arr.length)];
+    return [
+      pick(openers),
+      "",
+      lines[0],
+      lines[1],
+      lines[Math.floor(Math.random()*lines.length)],
+      lines[Math.floor(Math.random()*lines.length)],
+      "",
+      pick(closers)
+    ].join("\n");
   }
+  function typewriterMultiline(el, text, speed=14){
+    el.textContent = "";
+    let i = 0;
+    const t = setInterval(() => {
+      el.textContent += text[i++];
+      if(i >= text.length) clearInterval(t);
+    }, speed);
+  }
+  function showLetter(){
+    letterTitle.textContent = currentName ? `A little note for ${currentName} 💌` : "A little note 💌";
+    const text = buildLetter(currentName || "you");
+    typewriterMultiline(letterBody, text, 14);
+    letter.classList.add('on');
+  }
+  copyLetterBtn.addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText(letterBody.textContent);
+      copyLetterBtn.textContent = "✅ Copied";
+      setTimeout(() => copyLetterBtn.textContent = "📋 Copy", 900);
+    }catch(_){
+      window.prompt("Copy this:", letterBody.textContent);
+    }
+  });
+  rerollLetterBtn.addEventListener('click', () => showLetter());
+
+  // Celebration
+  let celebrating = false;
+  function showDateBox(){ pickDateIdea(); dateBox.classList.add('on'); }
   function startCelebration(){
     overlay.classList.add('on');
-    setTimeout(showDateBox, 2600);
+    setTimeout(showDateBox, 2200);
     startFalling(12000);
     startFireworks(10000);
     setTimeout(() => submsgEl.classList.add('on'), 5000);
+    setTimeout(showLetter, 7200);
     allowClicksForConfetti = true;
 
     yesBtn.disabled = true;
@@ -813,94 +827,30 @@
     noBtn.style.display = 'none';
   }
 
-  // ========= 18) Share button =========
+  // Share includes name param
   shareBtn.addEventListener('click', async () => {
-    const shareData = { title: "Valentine?", text: "Will you be my valentine? 💘", url: location.href };
+    const url = new URL(location.href);
+    if(currentName) url.searchParams.set("name", currentName);
+    else url.searchParams.delete("name");
+    const shareUrl = url.toString();
+
+    const shareData = { title: "Valentine?", text: "Will you be my valentine? 💘", url: shareUrl };
     try{
       if(navigator.share){
         await navigator.share(shareData);
         shareBtn.textContent = "✅ Shared";
         setTimeout(() => shareBtn.textContent = "💌 Share", 1200);
       }else{
-        await navigator.clipboard.writeText(location.href);
+        await navigator.clipboard.writeText(shareUrl);
         shareBtn.textContent = "✅ Link copied";
         setTimeout(() => shareBtn.textContent = "💌 Share", 1200);
       }
     }catch(_){
-      window.prompt("Copy this link:", location.href);
+      window.prompt("Copy this link:", shareUrl);
     }
   });
 
-  // ========= 19) Screenshot (best-effort; GIF may break due to CORS) =========
-  function downloadBlob(blob, filename){
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  }
-  async function screenshotElement(el){
-    const rect = el.getBoundingClientRect();
-    const clone = el.cloneNode(true);
-
-    const xmlns = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(xmlns, "svg");
-    svg.setAttribute("width", rect.width);
-    svg.setAttribute("height", rect.height);
-
-    const fo = document.createElementNS(xmlns, "foreignObject");
-    fo.setAttribute("width", "100%");
-    fo.setAttribute("height", "100%");
-
-    const wrapper = document.createElement("div");
-    wrapper.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
-    wrapper.style.width = rect.width + "px";
-    wrapper.style.height = rect.height + "px";
-    wrapper.appendChild(clone);
-
-    fo.appendChild(wrapper);
-    svg.appendChild(fo);
-
-    const svgBlob = new Blob([new XMLSerializer().serializeToString(svg)], { type: "image/svg+xml;charset=utf-8" });
-    const url = URL.createObjectURL(svgBlob);
-
-    const img = new Image();
-    img.decoding = "async";
-    img.crossOrigin = "anonymous";
-    await new Promise((resolve, reject) => {
-      img.onload = resolve;
-      img.onerror = reject;
-      img.src = url;
-    });
-    URL.revokeObjectURL(url);
-
-    const out = document.createElement("canvas");
-    const dpr = devicePixelRatio || 1;
-    out.width = Math.floor(rect.width * dpr);
-    out.height = Math.floor(rect.height * dpr);
-    const octx = out.getContext("2d");
-    octx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    octx.drawImage(img, 0, 0);
-    return await new Promise((resolve) => out.toBlob(resolve, "image/png"));
-  }
-  shotBtn.addEventListener('click', async () => {
-    try{
-      shotBtn.textContent = "📸 Capturing...";
-      const blob = await screenshotElement(card);
-      if(!blob) throw new Error("No blob");
-      downloadBlob(blob, "valentine.png");
-      shotBtn.textContent = "✅ Saved";
-      setTimeout(() => shotBtn.textContent = "📸 Screenshot", 1200);
-    }catch(_){
-      shotBtn.textContent = "⚠️ Failed";
-      setTimeout(() => shotBtn.textContent = "📸 Screenshot", 1200);
-      alert("Screenshot can fail if the GIF is cross-origin (CORS). For best results, download a GIF and use it locally like src='cute.gif'.");
-    }
-  });
-
-  // ========= 20) Easter egg: typing LOVE =========
+  // Easter egg
   let buffer = "";
   function triggerEasterEgg(){
     overlay.classList.add('on');
@@ -909,68 +859,39 @@
     startFalling(6500);
     startFireworks(5500);
     confettiBurst(window.innerWidth/2, window.innerHeight*0.33, mode==="chaotic" ? 220 : 140);
+    setTimeout(showLetter, 1200);
   }
   window.addEventListener('keydown', (e) => {
     const k = (e.key || "").toLowerCase();
     if(!k || k.length !== 1) return;
     buffer = (buffer + k).slice(-6);
-    if(buffer.endsWith("love")){
-      triggerEasterEgg();
-      buffer = "";
-    }
+    if(buffer.endsWith("love")){ triggerEasterEgg(); buffer = ""; }
   });
 
-  // ========= YouTube Music: Elvis "Burning Love" =========
-  // Video ID from https://www.youtube.com/watch?v=zf2VYAtqRe0
+  // YouTube Music: Burning Love
   const YT_VIDEO_ID = "zf2VYAtqRe0";
-  let ytPlayer = null;
-  let ytReady = false;
-  let musicOn = false;
+  let ytPlayer = null, ytReady = false, musicOn = false;
 
-  // YouTube IFrame API callback must be global
   window.onYouTubeIframeAPIReady = function(){
     ytPlayer = new YT.Player('yt-player', {
-      width: '1',
-      height: '1',
-      videoId: YT_VIDEO_ID,
-      playerVars: {
-        autoplay: 0,
-        controls: 0,
-        rel: 0,
-        playsinline: 1,
-        mute: 1,
-        modestbranding: 1
-      },
-      events: {
-        onReady: () => { ytReady = true; },
-        onStateChange: () => {}
-      }
+      width:'1', height:'1', videoId: YT_VIDEO_ID,
+      playerVars: { autoplay:0, controls:0, rel:0, playsinline:1, mute:1, modestbranding:1 },
+      events: { onReady: () => { ytReady = true; } }
     });
   };
 
   async function setMusic(on){
     musicOn = on;
     musicBtn.textContent = musicOn ? "🔊 Music" : "🔇 Music";
-
     if(!ytReady || !ytPlayer) return;
-
     try{
-      if(musicOn){
-        // Start muted -> unmute to be safe with policies after click
-        ytPlayer.playVideo();
-        ytPlayer.unMute();
-        ytPlayer.setVolume(80);
-      }else{
-        ytPlayer.pauseVideo();
-      }
+      if(musicOn){ ytPlayer.playVideo(); ytPlayer.unMute(); ytPlayer.setVolume(80); }
+      else ytPlayer.pauseVideo();
     }catch(_){}
   }
+  musicBtn.addEventListener('click', async () => setMusic(!musicOn));
 
-  musicBtn.addEventListener('click', async () => {
-    await setMusic(!musicOn);
-  });
-
-  // On YES: do the fake loading + celebration, and TRY to start music (user gesture)
+  // YES click: loading + celebration + try start music
   yesBtn.addEventListener('click', async () => {
     if(celebrating) return;
     celebrating = true;
@@ -978,18 +899,12 @@
     incKiss();
     yesBtn.textContent = "Processing love... ⏳";
 
-    // try starting music on this user gesture (works if API ready)
     await setMusic(true);
-
-    setTimeout(() => {
-      startCelebration();
-    }, 1400);
+    setTimeout(() => startCelebration(), 1400);
   });
 
-  // Also try on any user gesture (helps on some mobiles)
-  window.addEventListener('pointerdown', () => {
-    if(musicOn) setMusic(true);
-  }, { passive:true });
+  // Helps on some mobiles
+  window.addEventListener('pointerdown', () => { if(musicOn) setMusic(true); }, { passive:true });
 
 })();
 </script>
